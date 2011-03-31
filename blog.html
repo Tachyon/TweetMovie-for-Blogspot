@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Latest watchlist of __UP_myname__" height="230"/> 
+  <UserPref name="myname" display_name="Twitter ID" default_value="s4k3t"/>
+  <UserPref name="fontsize" display_name="Font Size" default_value="12"/>
+  <UserPref name="font" display_name="Font" default_value="Trebuchet,Verdana,Sans-serif"/>
+  <UserPref name="fontcolor" display_name="Font Color" default_value="#99AADD"/>
+  <UserPref name="bgcolor" display_name="Background Color" default_value="#000"/>
+  <Content type="html">
+    <![CDATA[
+   <style>
+      a{
+      text-decoration:none;
+      color:#99AADD;
+      }
+      a:hover{
+      text-decoration:underline;
+      color:#aadd99;
+      }
+      #movie_list{
+	  margin:0px;
+          height:1.5em;
+      }
+      #movie_list td{
+          padding-left:20px;
+          background-image:url('http://www.saketsaurabh.in/twitter/blogger/movie_bullet.png');
+          background-repeat:no-repeat;
+      }
+      #movie_div{
+      min-height:230px;
+      }
+   </style>
+   <div id="movie_div">
+     <table id="movie_list">
+     </table>
+     <p style="font-size:10px;color:#999999;"> Developed by <a href="http://www.saketsaurabh.in" target="_blank">Saket Saurabh</a></p>
+   </div>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" ></script>   
+   <script type="text/javascript">
+   var prefs = new gadgets.Prefs();
+   function displayGreeting () {
+            $('#movie_div').css("background-color",prefs.getString("bgcolor"));
+            $('#movie_div').css("font-family",prefs.getString("font"));
+            $('#movie_list').css("font-size",prefs.getString("fontsize") + "px");
+            $('#movie_div').css("color",prefs.getString("fontcolor"));
+			$.ajax(
+				{
+				dataType: 'jsonp',
+				data: 'id='+prefs.getString("myname"),
+				jsonp: 'jsonp_callback',
+				url: 'http://acm.itbhu.ac.in/twitter/tweet.php',
+				success: function(data) {
+				        for( var i =0;i<10;i++)
+						        $('#movie_list').append("<tr><td><a href='"+data[i].link+"' title='"+data[i].movie+"' >"+data[i].movie+"</a></td></tr>");
+						},
+				});
+			}
+		gadgets.util.registerOnLoadHandler(displayGreeting);
+		</script>    
+		]]>  
+         
+	</Content>
+</Module>
+      
